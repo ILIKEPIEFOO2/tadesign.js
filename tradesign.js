@@ -34,7 +34,9 @@ function TradeSign(buy, sell) {
                     if (inventory.get(i).count <= maxStackSize - this.buying.count) {
                         inventory.get(i).count += this.buying.count;
                         player.inventory.get(player.inventory.find(this.buying)).count -= this.buying.count;
-                        player.give(inventory.get(inventory.find(this.selling.ignoreNBT())).getCopy());
+						var playerItem=inventory.get(inventory.find(this.selling.ignoreNBT())).getCopy();
+						playerItem.count=this.selling.count;
+						player.give(playerItem);
                         inventory.get(inventory.find(this.selling.ignoreNBT())).count -= this.selling.count;
                         hasFinished = true;
                         player.tell("[TradeSigns] You have successfully traded a " + this.buying.toString() + " for a " + this.selling.toString() + "!");
@@ -49,7 +51,9 @@ function TradeSign(buy, sell) {
                 if (foundEmptySpot) {
                     inventory.set(emptySpace, this.buying);
                     player.inventory.get(player.inventory.find(this.buying)).count -= this.buying.count;
-                    player.give(inventory.get(inventory.find(this.selling.ignoreNBT())).getCopy());
+                    var playerItem=inventory.get(inventory.find(this.selling.ignoreNBT())).getCopy();
+					playerItem.count=this.selling.count;
+					player.give(playerItem);
                     inventory.get(inventory.find(this.selling.ignoreNBT())).count -= this.selling.count;
                 } else {
                     player.tell("[TradeSigns] Chest lacks the space to complete transaction.");
